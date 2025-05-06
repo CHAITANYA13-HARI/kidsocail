@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KidSocial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f8ff;
+      color: #333;
+      text-align: center;
+    }
+
+    header {
+      background-color: #4a90e2;
+      color: white;
+      padding: 30px 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.8em;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .game-section {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    input {
+      padding: 10px;
+      width: 60%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #43a047;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .correct {
+      color: green;
+    }
+
+    .incorrect {
+      color: red;
+    }
+
+    .cards-area {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .memory-card {
+      background-color: #e1f5fe;
+      border-radius: 8px;
+      height: 60px;
+      font-size: 1.5em;
+      line-height: 60px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      padding: 15px;
+      background-color: #4a90e2;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>KidSocial Games Section</h1>
+    <p>Fun games that make you smarter!</p>
+  </header>
+  <main>
+    <!-- Math Game -->
+    <div class="game-section">
+      <h2>➕ Math Master</h2>
+      <p>Solve this problem:</p>
+      <p id="mathProblem">What is 8 + 6?</p>
+      <input type="number" id="mathAnswer" placeholder="Enter your answer"/>
+      <br />
+      <button onclick="checkMath()">Submit</button>
+      <div id="mathFeedback" class="feedback"></div>
+    </div>
+    <!-- Word Game -->
+    <div class="game-section">
+      <h2>🔤 Word Wizard</h2>
+      <p>Unscramble this word:</p>
+      <p id="scrambledWord">nibrad</p>
+      <input type="text" id="wordAnswer" placeholder="Type the word"/>
+      <br />
+      <button onclick="checkWord()">Submit</button>
+      <div id="wordFeedback" class="feedback"></div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 KidSocial</p>
+  </footer>
+
+  <script>
+    // ========== Math Game ==========
+  let num1, num2, correctMathAnswer;
+
+function generateMathProblem() {
+  num1 = Math.floor(Math.random() * 41) + 10; // 10 to 50
+  num2 = Math.floor(Math.random() * 41) + 10;
+  correctMathAnswer = num1 + num2;
+  document.getElementById("mathProblem").textContent = `What is ${num1} + ${num2}?`;
+  document.getElementById("mathAnswer").value = "";
+  document.getElementById("mathFeedback").textContent = "";
+}
+
+function checkMath() {
+  const answer = parseInt(document.getElementById("mathAnswer").value);
+  const feedback = document.getElementById("mathFeedback");
+  if (answer === correctMathAnswer) {
+    feedback.textContent = "Correct! 🎉";
+    feedback.className = "feedback correct";
+    generateMathProblem(); // Load next question after correct
+  } else {
+    feedback.textContent = "Oops! Try again.";
+    feedback.className = "feedback incorrect";
+  }
+}
+
+// ========== Word Game ==========
+const words = ["brain", "apple", "happy", "smart", "funny", "puzzle"];
+let correctWord;
+
+function generateScrambledWord() {
+  correctWord = words[Math.floor(Math.random() * words.length)];
+  let scrambled = correctWord.split('');
+  while (scrambled.join('') === correctWord) {
+    scrambled.sort(() => 0.5 - Math.random());
+  }
+  document.getElementById("scrambledWord").textContent = scrambled.join('');
+  document.getElementById("wordAnswer").value = "";
+  document.getElementById("wordFeedback").textContent = "";
+}
+
+function checkWord() {
+  const input = document.getElementById("wordAnswer").value.toLowerCase();
+  const feedback = document.getElementById("wordFeedback");
+  if (input === correctWord) {
+    feedback.textContent = "You got it! 🧠";
+    feedback.className = "feedback correct";
+    generateScrambledWord(); // Load next word
+  } else {
+    feedback.textContent = "Hmm... that's not it.";
+    feedback.className = "feedback incorrect";
+  }
+}
+
+// ========== On Page Load ==========
+window.onload = function () {
+  generateMathProblem();
+  generateScrambledWord();
+};
+
+  </script>
+</body>
+</html>

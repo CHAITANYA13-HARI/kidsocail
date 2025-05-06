@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to KidSocial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #FFDEE9, #B5FFFC);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff5e6;
+      border: 5px dashed #ffb347;
+      border-radius: 30px;
+      padding: 40px;
+      width: 90%;
+      max-width: 750px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #ff6f61;
+      margin-bottom: 20px;
+    }
+
+    .role-select {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 30px;
+    }
+
+    .role-btn {
+      padding: 15px 30px;
+      background: #ffcccb;
+      border: none;
+      border-radius: 25px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .role-btn:hover {
+      background: #ff6f61;
+      color: white;
+    }
+    .role-btn1 {
+      padding: 15px 30px;
+      background: #ffcccb;
+      border: none;
+      border-radius: 25px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .role-btn1:hover {
+      background: #ff6f61;
+      color: white;
+    }
+
+    .form-container {
+      display: none;
+    }
+
+    .form-container.active {
+      display: block;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input {
+      padding: 12px;
+      margin: 10px 0;
+      border: 2px solid #ffcccb;
+      border-radius: 20px;
+      width: 80%;
+      font-size: 16px;
+      background-color: #fffaf0;
+    }
+
+    input:focus {
+      border-color: #ff6f61;
+      outline: none;
+    }
+
+    button {
+      padding: 12px 25px;
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #e4574c;
+    }
+
+    p {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    a {
+      color: #ff6f61;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .emoji {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      background: none;
+      border: none;
+      color: #888;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="roleSelector">
+    <div class="emoji">Welcome to KidSocial</div>
+    <h2>Who are you?</h2>
+    <div class="role-select">
+      <button class="role-btn" onclick="selectRole('kid')">I’m a Kid 🧒</button>
+      <button class="role-btn" onclick="selectRole('parent')">I’m a Parent 👨‍👩‍👧</button>
+      <button class="role-btn1" onclick="location.href='index.html'">I'm a guest🙋🏻</button>
+    </div>
+  </div>
+
+  <!-- Login/Register Form -->
+  <div class="container form-container" id="formArea">
+    <div class="emoji" id="emoji">🧒</div>
+    <h2 id="formTitle">Login to KidSocial</h2>
+
+    <!-- Login Form -->
+    <div class="form-container active" id="loginForm">
+      <form action="/login" method="POST">
+        <input type="email" name="email" placeholder="Your Email" required />
+        <input type="password" name="password" placeholder="Your Password" required />
+        <button type="submit">Login 🚀</button>
+        <p>New here? <a href="#" onclick="toggleForm()">Register</a></p>
+      </form>
+    </div>
+
+    <!-- Register Form -->
+    <div class="form-container" id="registerForm">
+      <form action="/register" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+        <button type="submit">Register 🎈</button>
+        <p>Already have an account? <a href="#" onclick="toggleForm()">Login</a></p>
+      </form>
+    </div>
+
+    <button class="back-btn" onclick="goBack()">← Go back</button>
+  </div>
+
+  <script>
+    function selectRole(role) {
+      document.getElementById('roleSelector').style.display = 'none';
+      document.getElementById('formArea').style.display = 'block';
+      document.getElementById('emoji').textContent = role === 'kid' ? '🧒' : '👨‍👩‍👧';
+      document.getElementById('formTitle').textContent = role === 'kid' ? 'Login to KidSocial (Kid)' && addparentcode() : 'Login to KidSocial (Parent)';
+    }
+
+    function toggleForm() {
+      document.getElementById('loginForm').classList.toggle('active');
+      document.getElementById('registerForm').classList.toggle('active');
+
+      const title = document.getElementById('formTitle');
+      if (document.getElementById('loginForm').classList.contains('active')) {
+        title.textContent = title.textContent.includes('Parent') ? 'Login to KidSocial (Parent)' : 'Login to KidSocial (Kid)';
+      } else {
+        title.textContent = title.textContent.includes('Parent') ? 'Register for KidSocial (Parent)' : 'Register for KidSocial (Kid)';
+      }
+    }
+
+    function goBack() {
+      document.getElementById('formArea').style.display = 'none';
+      document.getElementById('roleSelector').style.display = 'block';
+    }
+    function addparentcode(){
+      let add=document.getElementById("registerForm")
+      let parentcode=document.createElement("input");
+      parentcode.setAttribute("type","text");
+      parentcode.placeholder="Enter parent code";
+      add.appendChild(parentcode)
+
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Messaging App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      background-color: #f1f5f9;
+    }
+
+    .sidebar {
+      width: 25%;
+      background-color: #ffffff;
+      border-right: 1px solid #ddd;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 20px;
+    }
+
+    .contact {
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .contact:hover, .contact.active {
+      background-color: #e2e8f0;
+    }
+
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      background-color: #ffffff;
+      padding: 15px;
+      border-bottom: 1px solid #ddd;
+      font-weight: bold;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      max-width: 60%;
+      padding: 10px 15px;
+      border-radius: 20px;
+      word-wrap: break-word;
+    }
+
+    .message.me {
+      background-color: #3b82f6;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .message.them {
+      background-color: #e5e7eb;
+      color: black;
+      align-self: flex-start;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 15px;
+      background-color: #ffffff;
+      border-top: 1px solid #ddd;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      margin-right: 10px;
+    }
+
+    .chat-input button {
+      padding: 10px 20px;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .chat-input button:hover {
+      background-color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Chats</h2>
+    <div class="contact active">Alice</div>
+    <div class="contact">Bob</div>
+    <div class="contact">Charlie</div>
+  </div>
+
+  <div class="chat-container">
+    <div class="chat-header">Alice</div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message them">Hi there!</div>
+      <div class="message me">Hello! How are you?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="messageInput" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const text = input.value.trim();
+      if (text === '') return;
+
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'message me';
+      msgDiv.textContent = text;
+
+      const chatBox = document.getElementById('chatMessages');
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      input.value = '';
+    }
+  </script>
+
+</body>
+</html>
