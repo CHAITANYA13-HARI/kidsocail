@@ -49,7 +49,7 @@ function generateResponse(userMsg) {
     botMsg = `The result is ${result}.`;
   } 
   else if(userMsg.toLowerCase().includes('news')){
-  fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=cebcda7e23b84eb0a449f32775b2aee6')
+  fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=(your key)')
   .then(response => response.json())
   .then(data => {
     const articles = data.articles;
@@ -85,7 +85,7 @@ function generateResponse(userMsg) {
 }
 
 function getWeatherData(location) {
-  const apiKey = '0bebb729234e0c14651551fd9b05313c';
+  const apiKey = 'your key';
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
   fetch(apiUrl)
     .then(response => response.json())
